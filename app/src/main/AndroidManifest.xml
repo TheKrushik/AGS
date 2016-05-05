@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,8 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityBuy"
-            android:label="@string/title_activity_activity_buy"
+            android:name=".activity.BuyActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.AddActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

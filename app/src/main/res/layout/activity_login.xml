@@ -8,56 +8,59 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity"
+    android:background="@color/primary_material_light">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center_horizontal"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_margin="50dp">
 
         <TextView
+            android:id="@+id/tvLogon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Вход в систему:"
-            android:id="@+id/tvLogon"/>
+            android:text="@string/text_member_login"
+            android:layout_marginBottom="50dp"/>
+
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
             android:id="@+id/etLogin"
-            android:focusable="false"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/text_login"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/etPassword"/>
+            android:hint="@string/text_password"/>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_marginTop="30dp">
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ok"
-                android:id="@+id/btnOk"
-                />
+                android:text="@string/btn_ok"
+                android:layout_weight="1"/>
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Register"
                 android:id="@+id/btnRegister"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_register"
+                android:layout_weight="1"/>
         </LinearLayout>
 
     </LinearLayout>
