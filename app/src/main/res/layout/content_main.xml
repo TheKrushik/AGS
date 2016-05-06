@@ -10,7 +10,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.BuyActivity">
+    tools:context=".activity.MainActivity"
+    tools:showIn="@layout/activity_main">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -49,37 +50,12 @@
 
     </LinearLayout>
 
-    <SearchView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchView"
-        android:layout_below="@+id/btnMain"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/fabAdd"
-        android:layout_alignEnd="@+id/fabAdd"/>
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_below="@+id/searchView"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/listView"
-        android:id="@+id/relativeLayout">
-
-    </RelativeLayout>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView"
-        android:layout_gravity="center"
-        android:layout_below="@+id/relativeLayout"
+        android:text="@string/login_hello"
+        android:id="@+id/tvHello"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

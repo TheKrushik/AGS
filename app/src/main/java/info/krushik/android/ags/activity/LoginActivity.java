@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 loginInfo.getLogin();
                 loginInfo.getPassword();
 
-                Intent intent = new Intent(this, BuyActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra(LOGIN_INFO, loginInfo);
                 startActivity(intent);
                 break;

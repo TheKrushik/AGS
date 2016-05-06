@@ -6,4 +6,6 @@
     <string name="text_password">Введите пароль</string>
     <string name="btn_ok">Войти</string>
     <string name="btn_register">Регистрация</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="login_hello">login, выберите действие</string>
 </resources>
