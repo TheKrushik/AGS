@@ -14,48 +14,49 @@
     tools:showIn="@layout/activity_main">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout">
+        android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/iBtnBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/iBtnBuy"
             android:layout_weight="1"
             android:src="@drawable/ic_shopping_cart_white"
             />
 
         <ImageButton
+            android:id="@+id/iBtnClients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/iBtnClients"
             android:layout_weight="1"
             android:src="@drawable/ic_supervisor_account_white"/>
 
         <ImageButton
+            android:id="@+id/iBtnFuel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/iBtnFuel"
             android:layout_weight="1"
             android:src="@drawable/ic_save_white"/>
 
         <ImageButton
+            android:id="@+id/iBtnLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/iBtnLoading"
             android:layout_weight="1"
             android:src="@drawable/ic_swap_vertical_circle_white"/>
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvHello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_hello"
-        android:id="@+id/tvHello"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
 
 </RelativeLayout>

@@ -1,11 +1,8 @@
 <resources>
-    <string name="app_name">Автозаправка</string>
+    <string name="app_name">АЗС</string>
+    <string name="menu_about">О программе</string>
     <string name="action_settings">Settings</string>
     <string name="text_member_login">Вход в систему:</string>
-    <string name="text_login">Введите логин</string>
-    <string name="text_password">Введите пароль</string>
-    <string name="btn_ok">Войти</string>
-    <string name="btn_register">Регистрация</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="login_hello">login, выберите действие</string>
+
+
 </resources>

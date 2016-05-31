@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activity.LoginActivity"
+    tools:context=".activity.EntranceActivity"
     android:background="@color/primary_material_light">
 
     <LinearLayout
@@ -26,42 +26,21 @@
             android:layout_height="wrap_content"
             android:text="@string/text_member_login"
             android:layout_marginBottom="50dp"/>
-
-
-        <EditText
-            android:id="@+id/etLogin"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/buttonSignIN"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/text_login"/>
+            android:text="Sign In"
+            android:onClick="signIn"/>
 
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/buttonSignUP"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="@string/text_password"/>
+            android:text="Sign Up" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="30dp">
 
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_ok"
-                android:layout_weight="1"/>
 
-            <Button
-                android:id="@+id/btnRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_register"
-                android:layout_weight="1"/>
-        </LinearLayout>
 
     </LinearLayout>
 
