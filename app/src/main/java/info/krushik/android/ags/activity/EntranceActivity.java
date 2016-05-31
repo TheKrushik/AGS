@@ -15,7 +15,7 @@ import info.krushik.android.ags.adapters.LoginDataBaseAdapter;
 
 public class EntranceActivity extends AppCompatActivity {
 
-    Button btnSignIn,btnSignUp;
+    Button btnSignIn, btnSignUp;
     LoginDataBaseAdapter loginDataBaseAdapter;
 
     @Override
@@ -24,22 +24,23 @@ public class EntranceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_entrance);
 
         // create a instance of SQLite Database
-        loginDataBaseAdapter=new LoginDataBaseAdapter(this);
-        loginDataBaseAdapter=loginDataBaseAdapter.open();
+        loginDataBaseAdapter = new LoginDataBaseAdapter(this);
+        loginDataBaseAdapter = loginDataBaseAdapter.open();
 
         // Get The Refference Of Buttons
-        btnSignIn=(Button)findViewById(R.id.buttonSignIN);
-        btnSignUp=(Button)findViewById(R.id.buttonSignUP);
+        btnSignIn = (Button) findViewById(R.id.buttonSignIN);
+        btnSignUp = (Button) findViewById(R.id.buttonSignUP);
 
         // Set OnClick Listener on SignUp button
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 /// Create Intent for SignUpActivity  abd Start The Activity
-                Intent intentSignUP = new Intent(getApplicationContext(),SignUpActivity.class);
+                Intent intentSignUP = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(intentSignUP);
             }
         });
     }
+
     // Methos to handleClick Event of Sign In Button
     public void signIn(View V) {
         final Dialog dialog = new Dialog(EntranceActivity.this);
@@ -47,24 +48,24 @@ public class EntranceActivity extends AppCompatActivity {
         dialog.setTitle("Login");
 
         // get the Refferences of views
-        final  EditText editTextUserName=(EditText)dialog.findViewById(R.id.editTextUserNameToLogin);
-        final  EditText editTextPassword=(EditText)dialog.findViewById(R.id.editTextPasswordToLogin);
+        final EditText editTextUserName = (EditText) dialog.findViewById(R.id.editTextUserNameToLogin);
+        final EditText editTextPassword = (EditText) dialog.findViewById(R.id.editTextPasswordToLogin);
 
-        Button btnSignIn=(Button)dialog.findViewById(R.id.buttonSignIn);
+        Button btnSignIn = (Button) dialog.findViewById(R.id.buttonSignIn);
 
         // Set On ClickListener
         btnSignIn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // get The User name and Password
-                String userName=editTextUserName.getText().toString();
-                String password=editTextPassword.getText().toString();
+                String userName = editTextUserName.getText().toString();
+                String password = editTextPassword.getText().toString();
 
                 // fetch the Password form database for respective user name
-                String storedPassword=loginDataBaseAdapter.getSinlgeEntry(userName);
+                String storedPassword = loginDataBaseAdapter.getSinlgeEntry(userName);
 
                 // check if the Stored password matches with  Password entered by user
-                if(password.equals(storedPassword)){
+                if (password.equals(storedPassword)) {
                     Intent intent = new Intent(EntranceActivity.this, MainActivity.class);
                     intent.putExtra("login", userName);
 
