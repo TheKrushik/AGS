@@ -15,7 +15,7 @@ import info.krushik.android.ags.adapters.LoginDataBaseAdapter;
 
 public class EntranceActivity extends AppCompatActivity {
 
-    Button btnSignIn, btnSignUp;
+    Button mBtnSignIn, mBtnSignUp;
     LoginDataBaseAdapter loginDataBaseAdapter;
 
     @Override
@@ -28,11 +28,11 @@ public class EntranceActivity extends AppCompatActivity {
         loginDataBaseAdapter = loginDataBaseAdapter.open();
 
         // Get The Refference Of Buttons
-        btnSignIn = (Button) findViewById(R.id.buttonSignIN);
-        btnSignUp = (Button) findViewById(R.id.buttonSignUP);
+        mBtnSignIn = (Button) findViewById(R.id.buttonSignIN);
+        mBtnSignUp = (Button) findViewById(R.id.buttonSignUP);
 
         // Set OnClick Listener on SignUp button
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 /// Create Intent for SignUpActivity  abd Start The Activity
                 Intent intentSignUP = new Intent(getApplicationContext(), SignUpActivity.class);
@@ -67,7 +67,7 @@ public class EntranceActivity extends AppCompatActivity {
                 // check if the Stored password matches with  Password entered by user
                 if (password.equals(storedPassword)) {
                     Intent intent = new Intent(EntranceActivity.this, MainActivity.class);
-                    intent.putExtra("login", userName);
+                    intent.putExtra(LoginDataBaseAdapter.COLUMN_USERNAME, userName);
 
                     startActivity(intent);
 //                    Toast.makeText(getApplicationContext(), "Congrats: Login Successfull", Toast.LENGTH_LONG).show();

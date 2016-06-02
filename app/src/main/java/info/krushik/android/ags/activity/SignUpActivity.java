@@ -13,7 +13,7 @@ import info.krushik.android.ags.adapters.LoginDataBaseAdapter;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText editTextUserName,editTextPassword,editTextConfirmPassword;
+    EditText mEditTextUserName, mEditTextPassword, mEditTextConfirmPassword;
     Button btnCreateAccount;
 
     LoginDataBaseAdapter loginDataBaseAdapter;
@@ -27,18 +27,18 @@ public class SignUpActivity extends AppCompatActivity {
         loginDataBaseAdapter=loginDataBaseAdapter.open();
 
         // Get Refferences of Views
-        editTextUserName=(EditText)findViewById(R.id.editTextUserName);
-        editTextPassword=(EditText)findViewById(R.id.editTextPassword);
-        editTextConfirmPassword=(EditText)findViewById(R.id.editTextConfirmPassword);
+        mEditTextUserName =(EditText)findViewById(R.id.editTextUserName);
+        mEditTextPassword =(EditText)findViewById(R.id.editTextPassword);
+        mEditTextConfirmPassword =(EditText)findViewById(R.id.editTextConfirmPassword);
 
         btnCreateAccount=(Button)findViewById(R.id.buttonCreateAccount);
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
 
-                String userName=editTextUserName.getText().toString();
-                String password=editTextPassword.getText().toString();
-                String confirmPassword=editTextConfirmPassword.getText().toString();
+                String userName= mEditTextUserName.getText().toString();
+                String password= mEditTextPassword.getText().toString();
+                String confirmPassword= mEditTextConfirmPassword.getText().toString();
 
                 // check if any of the fields are vaccant
                 if(userName.equals("")||password.equals("")||confirmPassword.equals("")) {

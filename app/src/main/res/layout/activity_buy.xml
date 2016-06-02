@@ -36,14 +36,14 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/iBtnFuel"
+            android:id="@+id/iBtnProducts"
             android:layout_weight="1"
             android:src="@drawable/ic_save_white"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/iBtnLoading"
+            android:id="@+id/iBtnUpDownLoad"
             android:layout_weight="1"
             android:src="@drawable/ic_swap_vertical_circle_white"/>
 

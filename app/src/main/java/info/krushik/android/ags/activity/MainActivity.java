@@ -1,36 +1,41 @@
 package info.krushik.android.ags.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import info.krushik.android.ags.R;
+import info.krushik.android.ags.adapters.LoginDataBaseAdapter;
 
 public class MainActivity extends AppCompatActivity {
-    TextView tvHello;
+    TextView mTvHello;
+    ImageButton mIBtnBuy, mIBtnClients, mIBtnProducts, mIBtnUpDownLoad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvHello = (TextView) findViewById(R.id.tvHello);
+        mTvHello = (TextView) findViewById(R.id.tvHello);
+        mIBtnBuy = (ImageButton) findViewById(R.id.iBtnBuy);
+        mIBtnClients = (ImageButton) findViewById(R.id.iBtnClients);
+        mIBtnProducts = (ImageButton) findViewById(R.id.iBtnProducts);
+        mIBtnUpDownLoad = (ImageButton) findViewById(R.id.iBtnUpDownLoad);
 
         Intent intentLogin = getIntent();
-        String userName = intentLogin.getStringExtra("login");
+        String userName = intentLogin.getStringExtra(LoginDataBaseAdapter.COLUMN_USERNAME);
 
-        tvHello.setText(userName + ", выберите действие...");
+        mTvHello.setText(userName + ", выберите действие...");
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,8 +45,21 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
 
-
+    public void OnClick(View v){
+        mTvHello.setVisibility(View.INVISIBLE);
+        switch (v.getId()){
+            case R.id.iBtnBuy:
+                mIBtnBuy.setDrawingCacheBackgroundColor(R.color.colorLime);
+                break;
+            case R.id.iBtnClients:
+                break;
+            case R.id.iBtnProducts:
+                break;
+            case R.id.iBtnUpDownLoad:
+                break;
+        }
     }
 
     @Override

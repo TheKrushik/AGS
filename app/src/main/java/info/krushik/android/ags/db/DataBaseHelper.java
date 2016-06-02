@@ -17,10 +17,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // to create a new one.
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + "LOGIN" + "( "
-                + "ID" + " integer primary key autoincrement,"
-                + "USERNAME text,"
-                + "PASSWORD text);");
+        db.execSQL("create table " + LoginDataBaseAdapter.TABLE_NAME + " ("
+                + LoginDataBaseAdapter.COLUMN_ID + " integer primary key autoincrement,"
+                + LoginDataBaseAdapter.COLUMN_USERNAME + " text,"
+                + LoginDataBaseAdapter.COLUMN_PASSWORD + " text);");
 
     }
 
