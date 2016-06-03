@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/iBtnBuy"
             android:layout_weight="1"
-            android:src="@drawable/ic_shopping_cart_white"
+            android:src="@drawable/ic_buy"
             />
 
         <ImageButton
@@ -31,21 +31,21 @@
             android:layout_height="wrap_content"
             android:id="@+id/iBtnClients"
             android:layout_weight="1"
-            android:src="@drawable/ic_supervisor_account_white"/>
+            android:src="@drawable/ic_clients"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/iBtnProducts"
             android:layout_weight="1"
-            android:src="@drawable/ic_save_white"/>
+            android:src="@drawable/ic_products"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/iBtnUpDownLoad"
             android:layout_weight="1"
-            android:src="@drawable/ic_swap_vertical_circle_white"/>
+            android:src="@drawable/ic_up_download"/>
 
     </LinearLayout>
 

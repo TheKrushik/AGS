@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="OnClick"
-            android:src="@drawable/ic_shopping_cart_white"/>
+            android:src="@drawable/ic_buy"/>
 
         <ImageButton
             android:id="@+id/iBtnClients"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="OnClick"
-            android:src="@drawable/ic_supervisor_account_white"/>
+            android:src="@drawable/ic_clients"/>
 
         <ImageButton
             android:id="@+id/iBtnProducts"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="OnClick"
-            android:src="@drawable/ic_save_white"/>
+            android:src="@drawable/ic_products"/>
 
         <ImageButton
             android:id="@+id/iBtnUpDownLoad"
@@ -49,14 +49,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="OnClick"
-            android:src="@drawable/ic_swap_vertical_circle_white"/>
+            android:src="@drawable/ic_up_download"/>
 
     </LinearLayout>
 
     <include layout="@layout/content_hello"
-             />
+        />
+    <!--
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linearLayout"/>
+    -->
 
-
-
-
-</RelativeLayout>
+    </RelativeLayout>
