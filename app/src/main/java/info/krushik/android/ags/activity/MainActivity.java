@@ -15,9 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import info.krushik.android.ags.R;
 import info.krushik.android.ags.adapters.LoginDataBaseAdapter;
 
@@ -94,59 +91,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mFabProducts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplication(), "Floating Action Button 1", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mFabClients.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplication(), "Floating Action Button 2", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mFabBuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplication(), "Floating Action Button 3", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
         //Initialize an empty list of 50 elements
-        List list = new ArrayList();
-        for (int i = 0; i < 50; i++) {
-            list.add(new Object());
+//        List list = new ArrayList();
+//        for (int i = 0; i < 50; i++) {
+//            list.add(new Object());
+//        }
+    }
+
+    public void OnFabClick(View v) {
+        mTvHello.setVisibility(View.INVISIBLE);
+        switch (v.getId()) {
+            case R.id.fabProducts:
+                Toast.makeText(getApplication(), "Floating Action Button Products", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fabClients:
+                Toast.makeText(getApplication(), "Floating Action Button Clients", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fabBuy:
+                Toast.makeText(getApplication(), "Floating Action Button Buy", Toast.LENGTH_SHORT).show();
+                break;
         }
 
     }
 
     private void expandFAB() {
 
-        //Floating Action Button 1
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mFabProducts.getLayoutParams();
-        layoutParams.rightMargin += (int) (mFabProducts.getWidth() * 1.7);
-        layoutParams.bottomMargin += (int) (mFabProducts.getHeight() * 0.25);
-        mFabProducts.setLayoutParams(layoutParams);
+        //Floating Action Button Products
+        FrameLayout.LayoutParams layoutParamsProducts = (FrameLayout.LayoutParams) mFabProducts.getLayoutParams();
+        layoutParamsProducts.rightMargin += (int) (mFabProducts.getWidth() * 1.7);
+        layoutParamsProducts.bottomMargin += (int) (mFabProducts.getHeight() * 0.25);
+        mFabProducts.setLayoutParams(layoutParamsProducts);
         mFabProducts.startAnimation(show_fab_products);
         mFabProducts.setClickable(true);
 
-        //Floating Action Button 2
-        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) mFabClients.getLayoutParams();
-        layoutParams2.rightMargin += (int) (mFabClients.getWidth() * 1.5);
-        layoutParams2.bottomMargin += (int) (mFabClients.getHeight() * 1.5);
-        mFabClients.setLayoutParams(layoutParams2);
+        //Floating Action Button Clients
+        FrameLayout.LayoutParams layoutParamsClients = (FrameLayout.LayoutParams) mFabClients.getLayoutParams();
+        layoutParamsClients.rightMargin += (int) (mFabClients.getWidth() * 1.5);
+        layoutParamsClients.bottomMargin += (int) (mFabClients.getHeight() * 1.5);
+        mFabClients.setLayoutParams(layoutParamsClients);
         mFabClients.startAnimation(show_fab_clients);
         mFabClients.setClickable(true);
 
-        //Floating Action Button 3
-        FrameLayout.LayoutParams layoutParams3 = (FrameLayout.LayoutParams) mFabBuy.getLayoutParams();
-        layoutParams3.rightMargin += (int) (mFabBuy.getWidth() * 0.25);
-        layoutParams3.bottomMargin += (int) (mFabBuy.getHeight() * 1.7);
-        mFabBuy.setLayoutParams(layoutParams3);
+        //Floating Action Button Buy
+        FrameLayout.LayoutParams layoutParamsBuy = (FrameLayout.LayoutParams) mFabBuy.getLayoutParams();
+        layoutParamsBuy.rightMargin += (int) (mFabBuy.getWidth() * 0.25);
+        layoutParamsBuy.bottomMargin += (int) (mFabBuy.getHeight() * 1.7);
+        mFabBuy.setLayoutParams(layoutParamsBuy);
         mFabBuy.startAnimation(show_fab_buy);
         mFabBuy.setClickable(true);
     }
@@ -154,27 +144,27 @@ public class MainActivity extends AppCompatActivity {
 
     private void hideFAB() {
 
-        //Floating Action Button 1
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mFabProducts.getLayoutParams();
-        layoutParams.rightMargin -= (int) (mFabProducts.getWidth() * 1.7);
-        layoutParams.bottomMargin -= (int) (mFabProducts.getHeight() * 0.25);
-        mFabProducts.setLayoutParams(layoutParams);
+        //Floating Action Button Products
+        FrameLayout.LayoutParams layoutParamsProducts = (FrameLayout.LayoutParams) mFabProducts.getLayoutParams();
+        layoutParamsProducts.rightMargin -= (int) (mFabProducts.getWidth() * 1.7);
+        layoutParamsProducts.bottomMargin -= (int) (mFabProducts.getHeight() * 0.25);
+        mFabProducts.setLayoutParams(layoutParamsProducts);
         mFabProducts.startAnimation(hide_fab_products);
         mFabProducts.setClickable(false);
 
-        //Floating Action Button 2
-        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) mFabClients.getLayoutParams();
-        layoutParams2.rightMargin -= (int) (mFabClients.getWidth() * 1.5);
-        layoutParams2.bottomMargin -= (int) (mFabClients.getHeight() * 1.5);
-        mFabClients.setLayoutParams(layoutParams2);
+        //Floating Action Button Clients
+        FrameLayout.LayoutParams layoutParamsClients = (FrameLayout.LayoutParams) mFabClients.getLayoutParams();
+        layoutParamsClients.rightMargin -= (int) (mFabClients.getWidth() * 1.5);
+        layoutParamsClients.bottomMargin -= (int) (mFabClients.getHeight() * 1.5);
+        mFabClients.setLayoutParams(layoutParamsClients);
         mFabClients.startAnimation(hide_fab_clients);
         mFabClients.setClickable(false);
 
-        //Floating Action Button 3
-        FrameLayout.LayoutParams layoutParams3 = (FrameLayout.LayoutParams) mFabBuy.getLayoutParams();
-        layoutParams3.rightMargin -= (int) (mFabBuy.getWidth() * 0.25);
-        layoutParams3.bottomMargin -= (int) (mFabBuy.getHeight() * 1.7);
-        mFabBuy.setLayoutParams(layoutParams3);
+        //Floating Action Button Buy
+        FrameLayout.LayoutParams layoutParamsBuy = (FrameLayout.LayoutParams) mFabBuy.getLayoutParams();
+        layoutParamsBuy.rightMargin -= (int) (mFabBuy.getWidth() * 0.25);
+        layoutParamsBuy.bottomMargin -= (int) (mFabBuy.getHeight() * 1.7);
+        mFabBuy.setLayoutParams(layoutParamsBuy);
         mFabBuy.startAnimation(hide_fab_buy);
         mFabBuy.setClickable(false);
     }
