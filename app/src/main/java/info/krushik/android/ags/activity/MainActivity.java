@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         //Animations
         show_fab_products = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_products_show);
         hide_fab_products = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_products_hide);
-        show_fab_clients = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_сlients_show);
-        hide_fab_clients = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_сlients_hide);
+        show_fab_clients = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_clients_show);
+        hide_fab_clients = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_clients_hide);
         show_fab_buy = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_buy_show);
         hide_fab_buy = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_buy_hide);
 
