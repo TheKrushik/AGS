@@ -20,7 +20,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="text"/>
+        android:text="hello"/>
 
 
 </RelativeLayout>

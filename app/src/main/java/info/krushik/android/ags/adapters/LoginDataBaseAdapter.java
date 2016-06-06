@@ -10,8 +10,8 @@ import info.krushik.android.ags.db.DataBaseHelper;
 
 public class LoginDataBaseAdapter {
 
-    static final String DATABASE_NAME = "AgsDB.db";
-    static final int DATABASE_VERSION = 1;
+//    static final String DATABASE_NAME = "AgsDB.db";
+//    static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_NAME = "LOGIN";
     public static final String COLUMN_ID = "ID";
@@ -29,7 +29,7 @@ public class LoginDataBaseAdapter {
 
     public LoginDataBaseAdapter(Context _context) {
         context = _context;
-        dbHelper = new DataBaseHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
+        dbHelper = new DataBaseHelper(context);
     }
 
     public LoginDataBaseAdapter open() throws SQLException {

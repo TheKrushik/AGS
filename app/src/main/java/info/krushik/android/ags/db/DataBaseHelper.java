@@ -9,8 +9,8 @@ import info.krushik.android.ags.adapters.LoginDataBaseAdapter;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-    public DataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public DataBaseHelper(Context context) {
+        super(context, "AgsDB.db", null, 1);
     }
 
     // Called when no database exists in disk and the helper class needs
