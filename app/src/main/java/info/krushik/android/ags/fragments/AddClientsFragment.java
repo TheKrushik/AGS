@@ -1,109 +1,85 @@
 package info.krushik.android.ags.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import info.krushik.android.ags.R;
+import info.krushik.android.ags.objects.Client;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AddClientsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AddClientsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddClientsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String EXTRA_CLIENT = "info.krushik.android.ags.fragments.CLIENT";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Client mClient;
+    private EditText mEditTextIdCard;
+    private EditText mEditTextFirstName;
+    private EditText mEditTextLastName;
+    private EditText mEditTextPhone;
+    private EditText mEditTextEmail;
+    private Button mButtonSave;
 
-    private OnFragmentInteractionListener mListener;
-
-    public AddClientsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddClientsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AddClientsFragment newInstance(String param1, String param2) {
+    public static AddClientsFragment newInstance(Client client) {
         AddClientsFragment fragment = new AddClientsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        Bundle args = new Bundle();
+        args.putParcelable(EXTRA_CLIENT, client);
+
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_clients, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_add_clients, container, false);
+
+        Bundle args = getArguments();
+        mClient = args.getParcelable(EXTRA_CLIENT);
+
+        mEditTextIdCard = (EditText) view.findViewById(R.id.editTextIdCard);
+        mEditTextFirstName = (EditText) view.findViewById(R.id.editTextFirstName);
+        mEditTextLastName = (EditText) view.findViewById(R.id.editTextLastName);
+        mEditTextPhone = (EditText) view.findViewById(R.id.editTextPhone);
+        mEditTextEmail = (EditText) view.findViewById(R.id.editTextEmail);
+
+        mEditTextIdCard.setText(String.valueOf(mClient.idCard));
+        mEditTextFirstName.setText(mClient.FirstName);
+        mEditTextLastName.setText(mClient.LastName);
+        mEditTextPhone.setText(String.valueOf(mClient.Phone));
+        mEditTextEmail.setText(mClient.Email);
+
+        mButtonSave = (Button) view.findViewById(R.id.buttonSave);
+        mButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mClient.idCard = Integer.parseInt(mEditTextIdCard.getText().toString());
+                mClient.FirstName = mEditTextFirstName.getText().toString();
+                mClient.LastName = mEditTextLastName.getText().toString();
+                mClient.Phone = Integer.parseInt(mEditTextPhone.getText().toString());
+                mClient.Email = mEditTextEmail.getText().toString();
+
+                if (mListener != null) {
+                    mListener.onClientSaved(mClient);
+                }
+            }
+        });
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private ClientListener mListener;
+
+    public void setOnClientListener(ClientListener listener) {
+        mListener = listener;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface ClientListener {
+        void onClientSaved(Client client);
     }
 }

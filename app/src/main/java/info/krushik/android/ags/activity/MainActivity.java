@@ -16,13 +16,22 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import info.krushik.android.ags.R;
 import info.krushik.android.ags.adapters.LoginDataBaseAdapter;
+import info.krushik.android.ags.db.DataBaseHelper;
+import info.krushik.android.ags.fragments.AddClientsFragment;
+import info.krushik.android.ags.fragments.ListClientsFragment;
 import info.krushik.android.ags.fragments.TextHelloFragment;
+import info.krushik.android.ags.objects.Client;
 
 public class MainActivity extends AppCompatActivity {
 //    TextView mTvHello;
     ImageButton mIBtnBuy, mIBtnClients, mIBtnProducts, mIBtnUpDownLoad;
+
+    DataBaseHelper mHelper;
+    ArrayList<Client> mClients;
 
     FloatingActionButton mFab;
     FloatingActionButton mFabProducts;
@@ -105,14 +114,50 @@ public class MainActivity extends AppCompatActivity {
 //        }
     }
 
+    private void init() {//вычитка студентов и установка фрагментов
+        mClients = mHelper.getClients();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ListClientsFragment fragment = ListClientsFragment.newInstance(mClients);
+        fragment.setClientsItemListener(new ListClientsFragment.ClientsItemListener() {
+            @Override
+            public void onItemClick(long id) {
+                Client client = mHelper.getClient(id);
+                edit(client);
+            }
+        });
+        transaction.replace(R.id.fragmentView, fragment);
+        transaction.commit();
+    }
+
+    private void edit(Client client) {//принимает студента на редактирование
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        AddClientsFragment fragmentClient = AddClientsFragment.newInstance(client);
+        fragmentClient.setOnClientListener(new AddClientsFragment.ClientListener() {
+            @Override
+            public void onClientSaved(Client client) {
+                if (client.id == 0) {
+                    mHelper.insertClient(client);
+                } else {
+                    mHelper.updateClient(client);
+                }
+                init();
+            }
+        });
+        transaction.replace(R.id.fragmentView, fragmentClient);
+
+        transaction.commit();
+    }
+
     public void OnFabClick(View v) {
-//        mTvHello.setVisibility(View.INVISIBLE);
+        hideFAB();
         switch (v.getId()) {
             case R.id.fabProducts:
                 Toast.makeText(getApplication(), "Floating Action Button Products", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fabClients:
-                Toast.makeText(getApplication(), "Floating Action Button Clients", Toast.LENGTH_SHORT).show();
+                edit(new Client());
                 break;
             case R.id.fabBuy:
                 Toast.makeText(getApplication(), "Floating Action Button Buy", Toast.LENGTH_SHORT).show();
@@ -177,12 +222,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OnClick(View v){
-//        mTvHello.setVisibility(View.INVISIBLE);
         switch (v.getId()){
             case R.id.iBtnBuy:
-//                mIBtnBuy.setDrawingCacheBackgroundColor(R.color.colorLime);
                 break;
             case R.id.iBtnClients:
+                init();
                 break;
             case R.id.iBtnProducts:
                 break;
