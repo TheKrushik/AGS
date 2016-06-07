@@ -22,6 +22,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 + LoginDataBaseAdapter.COLUMN_USERNAME + " text,"
                 + LoginDataBaseAdapter.COLUMN_PASSWORD + " text);");
 
+//        db.execSQL("CREATE TABLE " + Student.TABLE_NAME + " ("
+//                + Student.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+//                + Student.COLUMN_FIRST_NAME + " TEXT NOT NULL,"
+//                + Student.COLUMN_LAST_NAME + " TEXT NOT NULL,"
+//                + Student.COLUMN_AGE + " INTEGER NOT NULL);");
+
     }
 
     // Called when there is a database version mismatch meaning that the version

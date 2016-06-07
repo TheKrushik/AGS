@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,9 +18,10 @@ import android.widget.Toast;
 
 import info.krushik.android.ags.R;
 import info.krushik.android.ags.adapters.LoginDataBaseAdapter;
+import info.krushik.android.ags.fragments.TextHelloFragment;
 
 public class MainActivity extends AppCompatActivity {
-    TextView mTvHello;
+//    TextView mTvHello;
     ImageButton mIBtnBuy, mIBtnClients, mIBtnProducts, mIBtnUpDownLoad;
 
     FloatingActionButton mFab;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTvHello = (TextView) findViewById(R.id.tvHello);
+//        mTvHello = (TextView) findViewById(R.id.tvHello);
         mIBtnBuy = (ImageButton) findViewById(R.id.iBtnBuy);
         mIBtnClients = (ImageButton) findViewById(R.id.iBtnClients);
         mIBtnProducts = (ImageButton) findViewById(R.id.iBtnProducts);
@@ -55,7 +57,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intentLogin = getIntent();
         String userName = intentLogin.getStringExtra(LoginDataBaseAdapter.COLUMN_USERNAME);
 
-        mTvHello.setText(userName + ", выберите действие...");
+//        mTvHello.setText(userName + ", выберите действие...");
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        TextHelloFragment fragmentHello = TextHelloFragment.newInstance(userName);
+        transaction.replace(R.id.fragmentView, fragmentHello);
+        transaction.commit();
 
 
         mRootLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
@@ -99,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OnFabClick(View v) {
-        mTvHello.setVisibility(View.INVISIBLE);
+//        mTvHello.setVisibility(View.INVISIBLE);
         switch (v.getId()) {
             case R.id.fabProducts:
                 Toast.makeText(getApplication(), "Floating Action Button Products", Toast.LENGTH_SHORT).show();
@@ -170,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OnClick(View v){
-        mTvHello.setVisibility(View.INVISIBLE);
+//        mTvHello.setVisibility(View.INVISIBLE);
         switch (v.getId()){
             case R.id.iBtnBuy:
 //                mIBtnBuy.setDrawingCacheBackgroundColor(R.color.colorLime);

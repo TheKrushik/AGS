@@ -9,8 +9,8 @@
     android:fitsSystemWindows="true"
     tools:context=".activity.MainActivity">
 
-        <include layout="@layout/content_main"
-                 android:id="@+id/fabAdd"/>
+    <include layout="@layout/content_main"
+             android:id="@+id/fabAdd"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -22,6 +22,11 @@
             android:tint="@color/foreground_material_dark"/>
 
     <include layout="@layout/layout_fab" />
+    <RelativeLayout
+        android:id="@+id/fragmentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
