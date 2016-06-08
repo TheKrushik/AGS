@@ -20,11 +20,11 @@ public class ListClientsFragment extends Fragment {
     private ListView mListView;
     private ArrayList<Client> mClients;
 
-    public static ListClientsFragment newInstance(ArrayList<Client> students) {
+    public static ListClientsFragment newInstance(ArrayList<Client> clients) {
         ListClientsFragment fragment = new ListClientsFragment();
 
         Bundle args = new Bundle();
-        args.putParcelableArrayList(EXTRA_CLIENTS, students);
+        args.putParcelableArrayList(EXTRA_CLIENTS, clients);
 
         fragment.setArguments(args);
 
@@ -52,7 +52,7 @@ public class ListClientsFragment extends Fragment {
                 Client client = mClients.get(position);//позиция в списке, то куда кликнули
 
                 if (mListener != null) {
-                    mListener.onItemClick(client.id);
+                    mListener.clientSelected(client);
                 }
             }
         });
@@ -60,13 +60,13 @@ public class ListClientsFragment extends Fragment {
         return view;
     }
 
-    private ClientsItemListener mListener;
+    private ClientListener mListener;
 
-    public void setClientsItemListener(ClientsItemListener listener) {
+    public void setClientListener(ClientListener listener) {
         mListener = listener;
     }
 
-    public interface ClientsItemListener {
-        void onItemClick(long id);
+    public interface ClientListener {
+        void clientSelected(Client client);
     }
 }

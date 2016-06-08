@@ -65,7 +65,7 @@ public class AddClientsFragment extends Fragment {
                 mClient.Email = mEditTextEmail.getText().toString();
 
                 if (mListener != null) {
-                    mListener.onClientSaved(mClient);
+                    mListener.clientSaved(mClient);
                 }
             }
         });
@@ -75,11 +75,11 @@ public class AddClientsFragment extends Fragment {
 
     private ClientListener mListener;
 
-    public void setOnClientListener(ClientListener listener) {
+    public void setClientListener(ClientListener listener) {
         mListener = listener;
     }
 
     public interface ClientListener {
-        void onClientSaved(Client client);
+        void clientSaved(Client client);
     }
 }

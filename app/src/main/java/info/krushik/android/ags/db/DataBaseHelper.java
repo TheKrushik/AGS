@@ -53,15 +53,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public boolean saveClient(Client client) {
+        if (client.id == 0) {
+            return insertClient(client) > 0;
+        } else {
+            return updateClient(client) > 0;
+        }
+    }
 
     public long insertClient(Client client){//сохранение студента(новый)
         SQLiteDatabase db = getWritableDatabase();
-        long id=0;
+        long id = 0;
 
         try {
             ContentValues values = new ContentValues();
 
-            values.put(Client.COLUMN_FIRST_NAME, client.FirstName);
+            values.put(Client.COLUMN_ID_CARD, client.idCard);
             values.put(Client.COLUMN_FIRST_NAME, client.FirstName);
             values.put(Client.COLUMN_LAST_NAME, client.LastName);
             values.put(Client.COLUMN_PHONE, client.Phone);
@@ -82,7 +89,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
 
-            values.put(Client.COLUMN_FIRST_NAME, client.FirstName);
+            values.put(Client.COLUMN_ID_CARD, client.idCard);
             values.put(Client.COLUMN_FIRST_NAME, client.FirstName);
             values.put(Client.COLUMN_LAST_NAME, client.LastName);
             values.put(Client.COLUMN_PHONE, client.Phone);

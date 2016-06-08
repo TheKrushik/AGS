@@ -1,10 +1,16 @@
 package info.krushik.android.ags.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +25,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import info.krushik.android.ags.R;
+import info.krushik.android.ags.adapters.ClientsLoader;
 import info.krushik.android.ags.adapters.LoginDataBaseAdapter;
 import info.krushik.android.ags.db.DataBaseHelper;
 import info.krushik.android.ags.fragments.AddClientsFragment;
@@ -26,12 +33,13 @@ import info.krushik.android.ags.fragments.ListClientsFragment;
 import info.krushik.android.ags.fragments.TextHelloFragment;
 import info.krushik.android.ags.objects.Client;
 
-public class MainActivity extends AppCompatActivity {
-//    TextView mTvHello;
+public class MainActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<ArrayList<Client>> {
+
     ImageButton mIBtnBuy, mIBtnClients, mIBtnProducts, mIBtnUpDownLoad;
 
-    DataBaseHelper mHelper;
-    ArrayList<Client> mClients;
+    private ProgressDialog mDialog;
+    private SaveTask mSaveTask;
 
     FloatingActionButton mFab;
     FloatingActionButton mFabProducts;
@@ -57,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        mTvHello = (TextView) findViewById(R.id.tvHello);
         mIBtnBuy = (ImageButton) findViewById(R.id.iBtnBuy);
         mIBtnClients = (ImageButton) findViewById(R.id.iBtnClients);
         mIBtnProducts = (ImageButton) findViewById(R.id.iBtnProducts);
@@ -65,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intentLogin = getIntent();
         String userName = intentLogin.getStringExtra(LoginDataBaseAdapter.COLUMN_USERNAME);
-
-//        mTvHello.setText(userName + ", выберите действие...");
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         TextHelloFragment fragmentHello = TextHelloFragment.newInstance(userName);
@@ -114,55 +119,30 @@ public class MainActivity extends AppCompatActivity {
 //        }
     }
 
-    private void init() {//вычитка студентов и установка фрагментов
-        mClients = mHelper.getClients();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ListClientsFragment fragment = ListClientsFragment.newInstance(mClients);
-        fragment.setClientsItemListener(new ListClientsFragment.ClientsItemListener() {
-            @Override
-            public void onItemClick(long id) {
-                Client client = mHelper.getClient(id);
-                edit(client);
-            }
-        });
-        transaction.replace(R.id.fragmentView, fragment);
-        transaction.commit();
-    }
-
-    private void edit(Client client) {//принимает студента на редактирование
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        AddClientsFragment fragmentClient = AddClientsFragment.newInstance(client);
-        fragmentClient.setOnClientListener(new AddClientsFragment.ClientListener() {
-            @Override
-            public void onClientSaved(Client client) {
-                if (client.id == 0) {
-                    mHelper.insertClient(client);
-                } else {
-                    mHelper.updateClient(client);
-                }
-                init();
-            }
-        });
-        transaction.replace(R.id.fragmentView, fragmentClient);
-
-        transaction.commit();
+        if (mSaveTask != null) {
+            mSaveTask.cancel(true);
+        }
     }
 
     public void OnFabClick(View v) {
         hideFAB();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (v.getId()) {
             case R.id.fabProducts:
                 Toast.makeText(getApplication(), "Floating Action Button Products", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fabClients:
-                edit(new Client());
+                onClientSelected(new Client());
                 break;
             case R.id.fabBuy:
                 Toast.makeText(getApplication(), "Floating Action Button Buy", Toast.LENGTH_SHORT).show();
                 break;
         }
+        transaction.commit();
 
     }
 
@@ -226,13 +206,80 @@ public class MainActivity extends AppCompatActivity {
             case R.id.iBtnBuy:
                 break;
             case R.id.iBtnClients:
-                init();
+                init(false);
+                Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iBtnProducts:
                 break;
             case R.id.iBtnUpDownLoad:
                 break;
         }
+    }
+    private void init(boolean restart) {//вычитка студентов и установка фрагментов
+        mDialog = new ProgressDialog(this);
+        mDialog.setMessage("Loading...");
+        mDialog.setCancelable(false);
+        mDialog.show();
+
+        if (restart) {
+            getSupportLoaderManager().restartLoader(0, null, this);
+        } else {
+            getSupportLoaderManager().initLoader(0, null, this);
+        }
+    }
+
+    @Override
+    public Loader<ArrayList<Client>> onCreateLoader(int id, Bundle args) {
+        return new ClientsLoader(this);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Client>> loader, final ArrayList<Client> data) {
+        Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                onLoaded(data);
+            }
+        };
+        handler.sendEmptyMessage(0);
+    }
+
+    private void onLoaded(ArrayList<Client> clients) {
+        ListClientsFragment fragment1 = ListClientsFragment.newInstance(clients);
+        fragment1.setClientListener(new ListClientsFragment.ClientListener() {
+            @Override
+            public void clientSelected(Client client) {
+                onClientSelected(client);
+            }
+        });
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentView, fragment1);
+        transaction.commit();
+
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
+    }
+
+    private void onClientSelected(Client client) {
+        AddClientsFragment fragment2 = AddClientsFragment.newInstance(client);
+        fragment2.setClientListener(new AddClientsFragment.ClientListener() {
+            @Override
+            public void clientSaved(Client client) {
+                mSaveTask = new SaveTask();
+                mSaveTask.execute(client);
+            }
+        });
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentView, fragment2);
+        transaction.commit();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Client>> loader) {
+
     }
 
     @Override
@@ -250,6 +297,39 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class SaveTask extends AsyncTask<Client, Void, Boolean> {
+        private ProgressDialog mDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            mDialog = new ProgressDialog(MainActivity.this);
+            mDialog.setMessage("Loading...");
+            mDialog.setCancelable(false);
+            mDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Client... params) {
+            Client client = params[0];
+            DataBaseHelper helper = new DataBaseHelper(MainActivity.this);
+
+            return helper.saveClient(client);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+
+            if (mDialog != null) {
+                mDialog.dismiss();
+            }
+
+            init(true);
+        }
     }
 
 }
