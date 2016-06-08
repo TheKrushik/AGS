@@ -19,8 +19,8 @@
         android:fromXDelta="170%"
         android:fromYDelta="25%"
         android:interpolator="@android:anim/linear_interpolator"
-        android:toXDelta="6%"
-        android:toYDelta="12%"></translate>
+        android:toXDelta="0%"
+        android:toYDelta="0%"></translate>
 
     <!--Fade In-->
     <alpha

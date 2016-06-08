@@ -130,7 +130,9 @@ public class MainActivity extends AppCompatActivity
 
     public void OnFabClick(View v) {
         hideFAB();
+        FAB_Status = false;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
         switch (v.getId()) {
             case R.id.fabProducts:
                 Toast.makeText(getApplication(), "Floating Action Button Products", Toast.LENGTH_SHORT).show();
