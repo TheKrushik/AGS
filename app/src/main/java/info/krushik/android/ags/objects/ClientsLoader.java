@@ -9,7 +9,7 @@ import java.util.List;
 import info.krushik.android.ags.db.DataBaseHelper;
 
 //AsyncTaskLoader - работа в фоновом потоке, отличие от AsyncTask: возвращает результат не обращаясь повторно в БД
-class ClientsLoader extends AsyncTaskLoader<ArrayList<Client>> {
+public class ClientsLoader extends AsyncTaskLoader<ArrayList<Client>> {
 
     private Context mContext;
     private ArrayList<Client> Clients;
