@@ -1,4 +1,4 @@
-package info.krushik.android.ags.adapters;
+package info.krushik.android.ags.objects;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
@@ -6,16 +6,15 @@ import android.support.v4.content.AsyncTaskLoader;
 import java.util.ArrayList;
 
 import info.krushik.android.ags.db.DataBaseHelper;
-import info.krushik.android.ags.objects.Client;
 
-//AsyncTaskLoader - работа в фоновом потоке, отличие от AsyncTask: возвращает результат не обращаяfalseсь повторно в БД
-public class ClientsLoader extends AsyncTaskLoader<ArrayList<Client>> {
+//AsyncTaskLoader - работа в фоновом потоке, отличие от AsyncTask: возвращает результат не обращаясь повторно в БД
+public class ProductsLoader extends AsyncTaskLoader<ArrayList<Product>> {
 
     private Context mContext;
-    private ArrayList<Client> mClients;
+    private ArrayList<Product> Products;
 
     //Конструктор
-    public ClientsLoader(Context context) {
+    public ProductsLoader(Context context) {
         super(context);
 
         this.mContext = context;
@@ -23,20 +22,20 @@ public class ClientsLoader extends AsyncTaskLoader<ArrayList<Client>> {
 
     //Работа в фоновом потоке
     @Override
-    public ArrayList<Client> loadInBackground() {
+    public ArrayList<Product> loadInBackground() {
         DataBaseHelper helper = new DataBaseHelper(mContext);//создаем helper
 
-        return helper.getClients();//вызываем метод все студенты
+        return helper.getProducts();//вызываем метод все студенты
     }
 
     //Возврат результата
     @Override
-    public void deliverResult(ArrayList<Client> data) {
+    public void deliverResult(ArrayList<Product> data) {
         if (isReset()) {//проверка зарезечен
             return;
         }
 
-        mClients = data;
+        Products = data;
 
         if (isStarted()) {//проверка застартован
             super.deliverResult(data);
@@ -46,11 +45,11 @@ public class ClientsLoader extends AsyncTaskLoader<ArrayList<Client>> {
     //Старт
     @Override
     protected void onStartLoading() {
-        if (mClients != null) {//если студенты не пустые
-            deliverResult(mClients);//он их возвращает
+        if (Products != null) {//если студенты не пустые
+            deliverResult(Products);//он их возвращает
         }
 
-        if (takeContentChanged() || mClients == null) {
+        if (takeContentChanged() || Products == null) {
             forceLoad();
         }
     }
@@ -66,8 +65,8 @@ public class ClientsLoader extends AsyncTaskLoader<ArrayList<Client>> {
     protected void onReset() {
         onStopLoading();
 
-        if (mClients != null) {
-            mClients = null;//очищает массив студентов
+        if (Products != null) {
+            Products = null;//очищает массив студентов
         }
     }
 }

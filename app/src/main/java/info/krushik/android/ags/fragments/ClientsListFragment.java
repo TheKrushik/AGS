@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import info.krushik.android.ags.R;
 import info.krushik.android.ags.objects.Client;
 
-public class ListClientsFragment extends Fragment {
+public class ClientsListFragment extends Fragment {
     private static final String EXTRA_CLIENTS = "info.krushik.android.ags.fragments.CLIENTS";
 
     private ListView mListView;
     private ArrayList<Client> mClients;
 
-    public static ListClientsFragment newInstance(ArrayList<Client> clients) {
-        ListClientsFragment fragment = new ListClientsFragment();
+    public static ClientsListFragment newInstance(ArrayList<Client> clients) {
+        ClientsListFragment fragment = new ClientsListFragment();
 
         Bundle args = new Bundle();
         args.putParcelableArrayList(EXTRA_CLIENTS, clients);
@@ -33,7 +33,7 @@ public class ListClientsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_clients, container, false);
+        View view = inflater.inflate(R.layout.fragment_clients_list, container, false);
         Bundle args = getArguments();
         mClients = args.getParcelableArrayList(EXTRA_CLIENTS);
 
@@ -43,7 +43,7 @@ public class ListClientsFragment extends Fragment {
                 android.R.id.text1,
                 mClients);
 
-        mListView = (ListView) view.findViewById(R.id.listView);
+        mListView = (ListView) view.findViewById(R.id.listViewClient);
         mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

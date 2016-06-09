@@ -10,15 +10,15 @@ import android.widget.TextView;
 
 import info.krushik.android.ags.R;
 
-public class TextHelloFragment extends Fragment {
+public class HelloTextFragment extends Fragment {
 
     private static final String EXTRA_USER_NAME = "info.krushik.android.ags.USER_NAME";
 
     private String mUserName;
 
 
-    public static TextHelloFragment newInstance(String userName) {
-        TextHelloFragment fragmentHello = new TextHelloFragment();
+    public static HelloTextFragment newInstance(String userName) {
+        HelloTextFragment fragmentHello = new HelloTextFragment();
 
         Bundle args = new Bundle();
         args.putString(EXTRA_USER_NAME, userName);
@@ -32,7 +32,7 @@ public class TextHelloFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_text_hello, container, false);
+        View view = inflater.inflate(R.layout.fragment_hello_text, container, false);
 
         Bundle args = getArguments();
         mUserName = args.getString(EXTRA_USER_NAME);

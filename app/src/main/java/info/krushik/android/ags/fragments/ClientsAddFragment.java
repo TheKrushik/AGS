@@ -11,7 +11,7 @@ import android.widget.EditText;
 import info.krushik.android.ags.R;
 import info.krushik.android.ags.objects.Client;
 
-public class AddClientsFragment extends Fragment {
+public class ClientsAddFragment extends Fragment {
     private static final String EXTRA_CLIENT = "info.krushik.android.ags.fragments.CLIENT";
 
     private Client mClient;
@@ -20,10 +20,10 @@ public class AddClientsFragment extends Fragment {
     private EditText mEditTextLastName;
     private EditText mEditTextPhone;
     private EditText mEditTextEmail;
-    private Button mButtonSave;
+    private Button mButtonSaveClient;
 
-    public static AddClientsFragment newInstance(Client client) {
-        AddClientsFragment fragment = new AddClientsFragment();
+    public static ClientsAddFragment newInstance(Client client) {
+        ClientsAddFragment fragment = new ClientsAddFragment();
 
         Bundle args = new Bundle();
         args.putParcelable(EXTRA_CLIENT, client);
@@ -37,7 +37,7 @@ public class AddClientsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_add_clients, container, false);
+        View view = inflater.inflate(R.layout.fragment_clients_add, container, false);
 
         Bundle args = getArguments();
         mClient = args.getParcelable(EXTRA_CLIENT);
@@ -54,8 +54,8 @@ public class AddClientsFragment extends Fragment {
         mEditTextPhone.setText(String.valueOf(mClient.Phone));
         mEditTextEmail.setText(mClient.Email);
 
-        mButtonSave = (Button) view.findViewById(R.id.buttonSave);
-        mButtonSave.setOnClickListener(new View.OnClickListener() {
+        mButtonSaveClient = (Button) view.findViewById(R.id.buttonSaveClient);
+        mButtonSaveClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mClient.idCard = Integer.parseInt(mEditTextIdCard.getText().toString());

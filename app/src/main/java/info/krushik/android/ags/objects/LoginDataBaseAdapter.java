@@ -1,4 +1,4 @@
-package info.krushik.android.ags.adapters;
+package info.krushik.android.ags.objects;
 
 import android.content.ContentValues;
 import android.content.Context;

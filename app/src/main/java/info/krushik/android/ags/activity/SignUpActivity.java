@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import info.krushik.android.ags.R;
-import info.krushik.android.ags.adapters.LoginDataBaseAdapter;
+import info.krushik.android.ags.objects.LoginDataBaseAdapter;
 
 public class SignUpActivity extends AppCompatActivity {
 
