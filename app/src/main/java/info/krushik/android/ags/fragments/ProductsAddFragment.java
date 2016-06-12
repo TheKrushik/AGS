@@ -56,7 +56,7 @@ public class ProductsAddFragment extends Fragment {
                 mProduct.Price = Integer.parseInt(mEditTextPrice.getText().toString());
 
                 if (mListener != null) {
-                    mListener.productSaved(mProduct);
+                    mListener.onProductSaved(mProduct);
                 }
             }
         });
@@ -66,12 +66,12 @@ public class ProductsAddFragment extends Fragment {
 
     private ProductListener mListener;
 
-    public void setProductListener(ProductListener listener) {
+    public void setOnProductListener(ProductListener listener) {
         mListener = listener;
     }
 
     public interface ProductListener {
-        void productSaved(Product product);
+        void onProductSaved(Product product);
     }
 
 }

@@ -4,9 +4,9 @@
              android:layout_height="match_parent"
              tools:context=".fragments.ProductsListFragment">
 
-<ListView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/listViewProduct"></ListView>
+    <ListView
+        android:id="@+id/listViewProduct"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 
 </FrameLayout>

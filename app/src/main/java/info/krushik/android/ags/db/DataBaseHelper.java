@@ -168,13 +168,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return  client;
     }
 
-    public boolean saveProduct(Product product) {
-        if (product.id == 0) {
-            return insertProduct(product) > 0;
-        } else {
-            return updateProduct(product) > 0;
-        }
-    }
+//    public boolean saveProduct(Product product) {
+//        if (product.id == 0) {
+//            return insertProduct(product) > 0;
+//        } else {
+//            return updateProduct(product) > 0;
+//        }
+//    }
 
     public long insertProduct(Product product){//сохранение студента(новый)
         SQLiteDatabase db = getWritableDatabase();

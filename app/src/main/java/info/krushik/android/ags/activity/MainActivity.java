@@ -10,6 +10,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -27,7 +28,6 @@ import info.krushik.android.ags.R;
 import info.krushik.android.ags.fragments.ProductsAddFragment;
 import info.krushik.android.ags.fragments.ProductsListFragment;
 import info.krushik.android.ags.loaders.ClientsLoader;
-import info.krushik.android.ags.loaders.ProductsLoader;
 import info.krushik.android.ags.objects.LoginDataBaseAdapter;
 import info.krushik.android.ags.db.DataBaseHelper;
 import info.krushik.android.ags.fragments.ClientsAddFragment;
@@ -37,7 +37,7 @@ import info.krushik.android.ags.objects.Client;
 import info.krushik.android.ags.objects.Product;
 
 public class MainActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<ArrayList<Client>>{
+        implements LoaderManager.LoaderCallbacks<ArrayList<Client>> {
 
 
     ImageButton mIBtnBuy, mIBtnClients, mIBtnProducts, mIBtnUpDownLoad;
@@ -45,7 +45,9 @@ public class MainActivity extends AppCompatActivity
 
     private ProgressDialog mDialog;
     private SaveTask mSaveTask;
-    private SaveTaskProduct mSaveTaskProduct;
+    //    private SaveTaskProduct mSaveTaskProduct;
+    private DataBaseHelper mHelper;
+    private ArrayList<Product> mProducts;
 
 
     FloatingActionButton mFab;
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
         //Initialize an empty list of 50 elements
 //        List list = new ArrayList();
 //        for (int i = 0; i < 50; i++) {
@@ -133,9 +136,9 @@ public class MainActivity extends AppCompatActivity
         if (mSaveTask != null) {
             mSaveTask.cancel(true);
         }
-        if (mSaveTaskProduct != null) {
-            mSaveTaskProduct.cancel(true);
-        }
+//        if (mSaveTaskProduct != null) {
+//            mSaveTaskProduct.cancel(true);
+//        }
     }
 
     public void OnFabClick(View v) {
@@ -145,7 +148,8 @@ public class MainActivity extends AppCompatActivity
 
         switch (v.getId()) {
             case R.id.fabProducts:
-                onProductSelected(new Product());
+//                onProductSelected(new Product());
+                edit(new Product());
                 Toast.makeText(getApplication(), "Floating Action Button Products", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fabClients:
@@ -186,7 +190,6 @@ public class MainActivity extends AppCompatActivity
         mFabBuy.setClickable(true);
     }
 
-
     private void hideFAB() {
 
         //Floating Action Button Products
@@ -214,8 +217,8 @@ public class MainActivity extends AppCompatActivity
         mFabBuy.setClickable(false);
     }
 
-    public void OnClick(View v){
-        switch (v.getId()){
+    public void OnClick(View v) {
+        switch (v.getId()) {
             case R.id.iBtnBuy:
                 break;
             case R.id.iBtnClients:
@@ -223,13 +226,52 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iBtnProducts:
-                init(false);
+                mHelper = new DataBaseHelper(this);
+                init();
                 Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iBtnUpDownLoad:
+
                 break;
         }
     }
+
+    private void init() {//вычитка студентов и установка фрагментов
+        mProducts = mHelper.getProducts();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ProductsListFragment fragment = ProductsListFragment.newInstance(mProducts);
+        fragment.setProductsItemListener(new ProductsListFragment.ProductsItemListener() {
+            @Override
+            public void onItemClick(long id) {
+                Product pruduct = mHelper.getProduct(id);
+                edit(pruduct);
+            }
+        });
+        transaction.replace(R.id.fragmentView, fragment);
+        transaction.commit();
+    }
+
+    private void edit(Product pruduct) {//принимает студента на редактирование
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        ProductsAddFragment fragment2 = ProductsAddFragment.newInstance(pruduct);
+        fragment2.setOnProductListener(new ProductsAddFragment.ProductListener() {
+            @Override
+            public void onProductSaved(Product pruduct) {
+                if (pruduct.id == 0) {
+                    mHelper.insertProduct(pruduct);
+                } else {
+                    mHelper.updateProduct(pruduct);
+                }
+                init();
+            }
+        });
+        transaction.replace(R.id.fragmentView, fragment2);
+
+        transaction.commit();
+    }
+
     private void init(boolean restart) {//вычитка студентов и установка фрагментов
         mDialog = new ProgressDialog(this);
         mDialog.setMessage("Loading...");
@@ -331,20 +373,20 @@ public class MainActivity extends AppCompatActivity
 //        }
 //    }
 
-    private void onProductSelected(Product product) {
-        ProductsAddFragment fragment2 = ProductsAddFragment.newInstance(product);
-        fragment2.setProductListener(new ProductsAddFragment.ProductListener() {
-            @Override
-            public void productSaved(Product product) {
-                mSaveTaskProduct = new SaveTaskProduct();
-                mSaveTaskProduct.execute(product);
-            }
-        });
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentView, fragment2);
-        transaction.commit();
-    }
+//    private void onProductSelected(Product product) {
+//        ProductsAddFragment fragment2 = ProductsAddFragment.newInstance(product);
+//        fragment2.setProductListener(new ProductsAddFragment.ProductListener() {
+//            @Override
+//            public void productSaved(Product product) {
+//                mSaveTaskProduct = new SaveTaskProduct();
+//                mSaveTaskProduct.execute(product);
+//            }
+//        });
+//
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.fragmentView, fragment2);
+//        transaction.commit();
+//    }
 
 //    @Override
 //    public void onLoaderReset(Loader<ArrayList<Product>> loader) {
@@ -401,37 +443,37 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    class SaveTaskProduct extends AsyncTask<Product, Void, Boolean> {
-        private ProgressDialog mDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            mDialog = new ProgressDialog(MainActivity.this);
-            mDialog.setMessage("Loading...");
-            mDialog.setCancelable(false);
-            mDialog.show();
-        }
-
-        @Override
-        protected Boolean doInBackground(Product... params) {
-            Product product = params[0];
-            DataBaseHelper helper = new DataBaseHelper(MainActivity.this);
-
-            return helper.saveProduct(product);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-
-            if (mDialog != null) {
-                mDialog.dismiss();
-            }
-
-            init(true);
-        }
-    }
+//    class SaveTaskProduct extends AsyncTask<Product, Void, Boolean> {
+//        private ProgressDialog mDialog;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//
+//            mDialog = new ProgressDialog(MainActivity.this);
+//            mDialog.setMessage("Loading...");
+//            mDialog.setCancelable(false);
+//            mDialog.show();
+//        }
+//
+//        @Override
+//        protected Boolean doInBackground(Product... params) {
+//            Product product = params[0];
+//            DataBaseHelper helper = new DataBaseHelper(MainActivity.this);
+//
+//            return helper.saveProduct(product);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Boolean aBoolean) {
+//            super.onPostExecute(aBoolean);
+//
+//            if (mDialog != null) {
+//                mDialog.dismiss();
+//            }
+//
+//            init(true);
+//        }
+//    }
 
 }

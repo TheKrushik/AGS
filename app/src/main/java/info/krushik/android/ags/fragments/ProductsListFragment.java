@@ -21,6 +21,7 @@ public class ProductsListFragment extends Fragment {
     private ListView mListView;
     private ArrayList<Product> mProducts;
 
+
     public static ProductsListFragment newInstance(ArrayList<Product> products) {
         ProductsListFragment fragment = new ProductsListFragment();
 
@@ -53,7 +54,7 @@ public class ProductsListFragment extends Fragment {
                 Product product = mProducts.get(position);//позиция в списке, то куда кликнули
 
                 if (mListener != null) {
-                    mListener.productSelected(product);
+                    mListener.onItemClick(product.id);
                 }
             }
         });
@@ -61,14 +62,14 @@ public class ProductsListFragment extends Fragment {
         return view;
     }
 
-    private ProductListener mListener;
+    private ProductsItemListener mListener;
 
-    public void setProductListener(ProductListener listener) {
+    public void setProductsItemListener(ProductsItemListener listener) {
         mListener = listener;
     }
 
-    public interface ProductListener {
-        void productSelected(Product product);
+    public interface ProductsItemListener {
+        void onItemClick(long product);
     }
 
 }
