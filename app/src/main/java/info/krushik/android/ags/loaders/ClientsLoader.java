@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import info.krushik.android.ags.db.DataBaseHelper;
 import info.krushik.android.ags.objects.Client;
 
-//AsyncTaskLoader - работа в фоновом потоке, отличие от AsyncTask: возвращает результат не обращаяfalseсь повторно в БД
+//AsyncTaskLoader - работа в фоновом потоке, отличие от AsyncTask: возвращает результат не обращаясь повторно в БД
 public class ClientsLoader extends AsyncTaskLoader<ArrayList<Client>> {
 
     private Context mContext;

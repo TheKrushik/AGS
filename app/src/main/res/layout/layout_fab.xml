@@ -29,13 +29,13 @@
         app:fabSize="mini"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabBuy"
+        android:id="@+id/fabSale"
         android:onClick="OnFabClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_buy"
+        android:src="@drawable/ic_sale"
         android:visibility="invisible"
         app:backgroundTint="@color/colorLime"
         app:fabSize="mini"/>

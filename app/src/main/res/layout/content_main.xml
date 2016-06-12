@@ -16,12 +16,12 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/iBtnBuy"
+            android:id="@+id/iBtnSale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="OnClick"
-            android:src="@drawable/ic_buy"/>
+            android:src="@drawable/ic_sale"/>
 
         <ImageButton
             android:id="@+id/iBtnClients"

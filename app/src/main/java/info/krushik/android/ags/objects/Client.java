@@ -3,6 +3,10 @@ package info.krushik.android.ags.objects;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
+@Root
 public class Client implements Parcelable {
     public static final String TABLE_NAME = "Clients";
 
@@ -13,12 +17,17 @@ public class Client implements Parcelable {
     public static final String COLUMN_PHONE = "Phone";
     public static final String COLUMN_EMAIL = "Email";
 
-
+    @Element
     public long id;
+    @Element
     public long idCard;
+    @Element
     public String FirstName;
+    @Element
     public String LastName;
+    @Element
     public long Phone;
+    @Element
     public String Email;
 
     public Client() {

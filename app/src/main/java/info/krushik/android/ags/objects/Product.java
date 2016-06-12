@@ -3,6 +3,10 @@ package info.krushik.android.ags.objects;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
+@Root
 public class Product implements Parcelable {
     public static final String TABLE_NAME = "Products";
 
@@ -10,8 +14,11 @@ public class Product implements Parcelable {
     public static final String COLUMN_PRODUCT_NAME = "ProductName";
     public static final String COLUMN_PRICE = "Price";
 
+    @Element
     public long id;
+    @Element
     public String ProductName;
+    @Element
     public long Price;
 
     public Product() {

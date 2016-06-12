@@ -17,7 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.EntranceActivity">
+        <activity android:name=".activity.EntranceActivity"
+                  android:screenOrientation="portrait">
         </activity>
         <activity android:name=".activity.SignUpActivity">
         </activity>

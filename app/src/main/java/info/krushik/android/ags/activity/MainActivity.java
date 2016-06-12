@@ -10,7 +10,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -22,11 +21,17 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import info.krushik.android.ags.R;
 import info.krushik.android.ags.fragments.ProductsAddFragment;
 import info.krushik.android.ags.fragments.ProductsListFragment;
+import info.krushik.android.ags.fragments.UpDownLoadFragment;
 import info.krushik.android.ags.loaders.ClientsLoader;
 import info.krushik.android.ags.objects.LoginDataBaseAdapter;
 import info.krushik.android.ags.db.DataBaseHelper;
@@ -40,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<ArrayList<Client>> {
 
 
-    ImageButton mIBtnBuy, mIBtnClients, mIBtnProducts, mIBtnUpDownLoad;
+    ImageButton mIBtnSale, mIBtnClients, mIBtnProducts, mIBtnUpDownLoad;
 
 
     private ProgressDialog mDialog;
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton mFab;
     FloatingActionButton mFabProducts;
     FloatingActionButton mFabClients;
-    FloatingActionButton mFabBuy;
+    FloatingActionButton mFabSale;
     CoordinatorLayout mRootLayout;
 
     //Save the FAB's active status
@@ -66,15 +71,15 @@ public class MainActivity extends AppCompatActivity
     Animation hide_fab_products;
     Animation show_fab_clients;
     Animation hide_fab_clients;
-    Animation show_fab_buy;
-    Animation hide_fab_buy;
+    Animation show_fab_sale;
+    Animation hide_fab_sale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mIBtnBuy = (ImageButton) findViewById(R.id.iBtnBuy);
+        mIBtnSale = (ImageButton) findViewById(R.id.iBtnSale);
         mIBtnClients = (ImageButton) findViewById(R.id.iBtnClients);
         mIBtnProducts = (ImageButton) findViewById(R.id.iBtnProducts);
         mIBtnUpDownLoad = (ImageButton) findViewById(R.id.iBtnUpDownLoad);
@@ -94,15 +99,15 @@ public class MainActivity extends AppCompatActivity
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFabProducts = (FloatingActionButton) findViewById(R.id.fabProducts);
         mFabClients = (FloatingActionButton) findViewById(R.id.fabClients);
-        mFabBuy = (FloatingActionButton) findViewById(R.id.fabBuy);
+        mFabSale = (FloatingActionButton) findViewById(R.id.fabSale);
 
         //Animations
         show_fab_products = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_products_show);
         hide_fab_products = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_products_hide);
         show_fab_clients = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_clients_show);
         hide_fab_clients = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_clients_hide);
-        show_fab_buy = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_buy_show);
-        hide_fab_buy = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_buy_hide);
+        show_fab_sale = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_sale_show);
+        hide_fab_sale = AnimationUtils.loadAnimation(getApplication(), R.anim.fab_sale_hide);
 
 
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -155,8 +160,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.fabClients:
                 onClientSelected(new Client());
                 break;
-            case R.id.fabBuy:
-                Toast.makeText(getApplication(), "Floating Action Button Buy", Toast.LENGTH_SHORT).show();
+            case R.id.fabSale:
+                Toast.makeText(getApplication(), "Floating Action Button Sale", Toast.LENGTH_SHORT).show();
                 break;
         }
         transaction.commit();
@@ -181,13 +186,13 @@ public class MainActivity extends AppCompatActivity
         mFabClients.startAnimation(show_fab_clients);
         mFabClients.setClickable(true);
 
-        //Floating Action Button Buy
-        FrameLayout.LayoutParams layoutParamsBuy = (FrameLayout.LayoutParams) mFabBuy.getLayoutParams();
-        layoutParamsBuy.rightMargin += (int) (mFabBuy.getWidth() * 0.25);
-        layoutParamsBuy.bottomMargin += (int) (mFabBuy.getHeight() * 1.7);
-        mFabBuy.setLayoutParams(layoutParamsBuy);
-        mFabBuy.startAnimation(show_fab_buy);
-        mFabBuy.setClickable(true);
+        //Floating Action Button Sale
+        FrameLayout.LayoutParams layoutParamsSale = (FrameLayout.LayoutParams) mFabSale.getLayoutParams();
+        layoutParamsSale.rightMargin += (int) (mFabSale.getWidth() * 0.25);
+        layoutParamsSale.bottomMargin += (int) (mFabSale.getHeight() * 1.7);
+        mFabSale.setLayoutParams(layoutParamsSale);
+        mFabSale.startAnimation(show_fab_sale);
+        mFabSale.setClickable(true);
     }
 
     private void hideFAB() {
@@ -208,18 +213,18 @@ public class MainActivity extends AppCompatActivity
         mFabClients.startAnimation(hide_fab_clients);
         mFabClients.setClickable(false);
 
-        //Floating Action Button Buy
-        FrameLayout.LayoutParams layoutParamsBuy = (FrameLayout.LayoutParams) mFabBuy.getLayoutParams();
-        layoutParamsBuy.rightMargin -= (int) (mFabBuy.getWidth() * 0.25);
-        layoutParamsBuy.bottomMargin -= (int) (mFabBuy.getHeight() * 1.7);
-        mFabBuy.setLayoutParams(layoutParamsBuy);
-        mFabBuy.startAnimation(hide_fab_buy);
-        mFabBuy.setClickable(false);
+        //Floating Action Button Sale
+        FrameLayout.LayoutParams layoutParamsSale = (FrameLayout.LayoutParams) mFabSale.getLayoutParams();
+        layoutParamsSale.rightMargin -= (int) (mFabSale.getWidth() * 0.25);
+        layoutParamsSale.bottomMargin -= (int) (mFabSale.getHeight() * 1.7);
+        mFabSale.setLayoutParams(layoutParamsSale);
+        mFabSale.startAnimation(hide_fab_sale);
+        mFabSale.setClickable(false);
     }
 
     public void OnClick(View v) {
         switch (v.getId()) {
-            case R.id.iBtnBuy:
+            case R.id.iBtnSale:
                 break;
             case R.id.iBtnClients:
                 init(false);
@@ -231,7 +236,27 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iBtnUpDownLoad:
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                UpDownLoadFragment fragmentUpDownLoad = new UpDownLoadFragment();
+                transaction.replace(R.id.fragmentView, fragmentUpDownLoad);
+                transaction.commit();
+                break;
+            case R.id.buttonUpLoadClients:
 
+                break;
+            case R.id.buttonUpLoadPoducts:
+
+                Serializer serializer = new Persister();
+                File file = new File(getFilesDir() + "/products.xml");
+                try {
+
+                    serializer.write(mProducts, file);
+                    Toast.makeText(this, mProducts.toString(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "NoSaved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, mProducts.toString(), Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
