@@ -46,7 +46,9 @@ public class ProductsAddFragment extends Fragment {
         mEditTextPrice = (EditText) view.findViewById(R.id.editTextPrice);
 
         mEditTextProductName.setText(mProduct.ProductName);
-        mEditTextPrice.setText(String.valueOf(mProduct.Price));
+        if(mProduct.Price != 0) {
+            mEditTextPrice.setText(String.valueOf(mProduct.Price));
+        }
 
         mButtonSaveProduct = (Button) view.findViewById(R.id.buttonSaveProduct);
         mButtonSaveProduct.setOnClickListener(new View.OnClickListener() {

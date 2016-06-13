@@ -1,14 +1,18 @@
 package info.krushik.android.ags.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import info.krushik.android.ags.R;
+import info.krushik.android.ags.activity.MainActivity;
 import info.krushik.android.ags.objects.Client;
 
 public class ClientsAddFragment extends Fragment {
@@ -48,10 +52,15 @@ public class ClientsAddFragment extends Fragment {
         mEditTextPhone = (EditText) view.findViewById(R.id.editTextPhone);
         mEditTextEmail = (EditText) view.findViewById(R.id.editTextEmail);
 
-        mEditTextIdCard.setText(String.valueOf(mClient.idCard));
+
+        if(mClient.idCard != 0) {
+            mEditTextIdCard.setText(String.valueOf(mClient.idCard));
+        }
         mEditTextFirstName.setText(mClient.FirstName);
         mEditTextLastName.setText(mClient.LastName);
-        mEditTextPhone.setText(String.valueOf(mClient.Phone));
+        if (mClient.Phone != 0) {
+            mEditTextPhone.setText(String.valueOf(mClient.Phone));
+        }
         mEditTextEmail.setText(mClient.Email);
 
         mButtonSaveClient = (Button) view.findViewById(R.id.buttonSaveClient);
@@ -64,11 +73,14 @@ public class ClientsAddFragment extends Fragment {
                 mClient.Phone = Integer.parseInt(mEditTextPhone.getText().toString());
                 mClient.Email = mEditTextEmail.getText().toString();
 
+
+
                 if (mListener != null) {
                     mListener.clientSaved(mClient);
                 }
             }
         });
+
 
         return view;
     }

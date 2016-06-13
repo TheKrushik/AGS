@@ -1,6 +1,7 @@
 package info.krushik.android.ags.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         mIBtnSale = (ImageButton) findViewById(R.id.iBtnSale);
         mIBtnClients = (ImageButton) findViewById(R.id.iBtnClients);
@@ -155,7 +159,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.fabProducts:
 //                onProductSelected(new Product());
                 edit(new Product());
-                Toast.makeText(getApplication(), "Floating Action Button Products", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplication(), "Floating Action Button Products", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fabClients:
                 onClientSelected(new Client());
@@ -228,12 +232,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.iBtnClients:
                 init(false);
-                Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iBtnProducts:
                 mHelper = new DataBaseHelper(this);
                 init();
-                Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "test", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iBtnUpDownLoad:
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -251,7 +255,7 @@ public class MainActivity extends AppCompatActivity
                 try {
 
                     serializer.write(mProducts, file);
-                    Toast.makeText(this, mProducts.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(this, "NoSaved", Toast.LENGTH_SHORT).show();
