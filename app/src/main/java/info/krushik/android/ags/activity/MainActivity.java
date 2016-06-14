@@ -273,25 +273,25 @@ public class MainActivity extends AppCompatActivity
         fragment.setProductsItemListener(new ProductsListFragment.ProductsItemListener() {
             @Override
             public void onItemClick(long id) {
-                Product pruduct = mHelper.getProduct(id);
-                edit(pruduct);
+                Product product = mHelper.getProduct(id);
+                edit(product);
             }
         });
         transaction.replace(R.id.fragmentView, fragment);
         transaction.commit();
     }
 
-    private void edit(Product pruduct) {//принимает студента на редактирование
+    private void edit(Product product) {//принимает студента на редактирование
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        ProductsAddFragment fragment2 = ProductsAddFragment.newInstance(pruduct);
+        ProductsAddFragment fragment2 = ProductsAddFragment.newInstance(product);
         fragment2.setOnProductListener(new ProductsAddFragment.ProductListener() {
             @Override
-            public void onProductSaved(Product pruduct) {
-                if (pruduct.id == 0) {
-                    mHelper.insertProduct(pruduct);
+            public void onProductSaved(Product product) {
+                if (product.id == 0) {
+                    mHelper.insertProduct(product);
                 } else {
-                    mHelper.updateProduct(pruduct);
+                    mHelper.updateProduct(product);
                 }
                 init();
             }
